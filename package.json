@@ -1,0 +1,23 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "[![Actions Status](https://github.com/CodeNovaGZ/fullstack-javascript-project-103/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/CodeNovaGZ/fullstack-javascript-project-103/actions)",
+  "homepage": "https://github.com/CodeNovaGZ/fullstack-javascript-project-103#readme",
+  "bugs": {
+    "url": "https://github.com/CodeNovaGZ/fullstack-javascript-project-103/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodeNovaGZ/fullstack-javascript-project-103.git"
+  },
+  "license": "ISC",
+  "author": "CodeNovaGZ",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "commander": "^14.0.3"
+  }
+}

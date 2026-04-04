@@ -12,7 +12,7 @@ program
     .description('Compares two configuration files and shows a difference')
     .option('-f, --format <type>', 'output format')
     .version('1.0.0')
-    .action((filepath1, filepath2, options) => {
+    .action((filepath1, filepath2) => {
     const data1 = getData(filepath1);
     const data2 = getData(filepath2);
     const diff = genDiff(data1, data2);

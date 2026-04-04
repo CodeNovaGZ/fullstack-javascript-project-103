@@ -1,5 +1,4 @@
 import genDiff from '../src/genDiff.js';
-import path from 'path';
 import file1 from './__fixtures__/file1.json';
 import file2 from './__fixtures__/file2.json';
 

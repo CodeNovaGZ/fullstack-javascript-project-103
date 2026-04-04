@@ -2,6 +2,7 @@
 
 import {Command} from 'commander';
 import getData from './src/parser.js';
+import genDiff from './src/genDiff.js';
 
 const program = new Command();
 
@@ -14,9 +15,8 @@ program
     .action((filepath1, filepath2, options) => {
     const data1 = getData(filepath1);
     const data2 = getData(filepath2);
-
-    console.log('Archivo 1:', data1);
-    console.log('Archivo 2:', data2);
+    const diff = genDiff(data1, data2);
+    console.log(diff);
 
 });
 

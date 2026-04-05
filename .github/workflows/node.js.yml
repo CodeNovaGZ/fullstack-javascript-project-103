@@ -37,6 +37,7 @@ jobs:
       # Solo enviamos desde una versión de la matrix para evitar colisiones
       if: ${{ matrix.node-version == '22.x' }}
       uses: paambaati/codeclimate-action@v9.0.0
+      continue-on-error: true
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
       with:

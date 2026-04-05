@@ -3,7 +3,6 @@ import _ from 'lodash';
 const formatStylish = (diff) => {
     const iter = (currentDiff, depth) => {
         const indent = ' '.repeat(depth*4-2);
-        const bracketIndent = ' '.repeat((depth-1)*4);
         const lines = currentDiff.map((node) => {
             const { key, type } = node;
             switch (type) {

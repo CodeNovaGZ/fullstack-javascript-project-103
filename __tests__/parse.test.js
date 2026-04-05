@@ -19,3 +19,29 @@ test('parse throws error when file does not exist', () => {
 test('parse throws error for invalid JSON', () => {
     expect(() => parse('./__tests__/__fixtures__/invalid.json')).toThrow(SyntaxError);
 });
+
+test('parse throws error when YAML file does not exist', () => {
+    expect(() => parse('./__tests__/__fixtures__/missing.yml')).toThrow();
+});
+
+test('parse archivo YAML .yml', () => {
+    const data = parse('./__tests__/__fixtures__/file3.yml');
+
+    expect(data).toEqual({
+        host: 'codica.io',
+        timeout: 50,
+        proxy: '123.234.53.22',
+        follow: false,
+    });
+});
+
+test('parse archivo YAML .yaml', () => {
+    const data = parse('./__tests__/__fixtures__/file3.yaml');
+
+    expect(data).toEqual({
+        host: 'codica.io',
+        timeout: 50,
+        proxy: '123.234.53.22',
+        follow: false,
+    });
+});

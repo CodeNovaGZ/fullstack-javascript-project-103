@@ -8,12 +8,14 @@ test('gendiff CLI imprime diff esperado', () => {
     './__tests__/__fixtures__/file2.json'
   ], { encoding: 'utf-8' });
 
-  expect(result.trim()).toBe(`- follow: false
-  host: codica.io
-- proxy: 123.234.53.22
-- timeout: 50
-+ timeout: 20
-+ verbose: true`);
+  expect(result.trim()).toBe(`{
+  - follow: false
+    host: codica.io
+  - proxy: 123.234.53.22
+  - timeout: 50
+  + timeout: 20
+  + verbose: true
+}`);
 });
 
 test('gendiff CLI imprime diff esperado para YAML .yaml', () => {
@@ -23,12 +25,14 @@ test('gendiff CLI imprime diff esperado para YAML .yaml', () => {
     './__tests__/__fixtures__/file4.yaml'
   ], { encoding: 'utf-8' });
 
-  expect(result.trim()).toBe(`- follow: false
-  host: codica.io
-- proxy: 123.234.53.22
-- timeout: 50
-+ timeout: 20
-+ verbose: true`);
+  expect(result.trim()).toBe(`{
+  - follow: false
+    host: codica.io
+  - proxy: 123.234.53.22
+  - timeout: 50
+  + timeout: 20
+  + verbose: true
+}`);
 });
 
 test('gendiff CLI imprime diff esperado para YAML .yml', () => {
@@ -38,10 +42,12 @@ test('gendiff CLI imprime diff esperado para YAML .yml', () => {
     './__tests__/__fixtures__/file4.yml'
   ], { encoding: 'utf-8' });
 
-  expect(result.trim()).toBe(`- follow: false
-  host: codica.io
-- proxy: 123.234.53.22
-- timeout: 50
-+ timeout: 20
-+ verbose: true`);
+  expect(result.trim()).toBe(`{
+  - follow: false
+    host: codica.io
+  - proxy: 123.234.53.22
+  - timeout: 50
+  + timeout: 20
+  + verbose: true
+}`);
 });

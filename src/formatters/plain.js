@@ -23,7 +23,7 @@ const formatPlain = (diff) => {
 
     const formatValue = (value, quoteComplex = false) => {
         if (_.isObject(value)) {
-            return quoteComplex ? `'[complex value]'` : '[complex value]';
+            return quoteComplex ? `[complex value]` : `[complex value]`;
         }
         if (typeof value === 'string') {
             return `'${value}'`;

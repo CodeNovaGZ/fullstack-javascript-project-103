@@ -1,4 +1,4 @@
-import genDiff from '../src/genDiff.js';
+import genDiff from '../src/formatters/index.js';
 import getData from '../src/parser.js';
 import path from 'path';
 import formatStylish from '../src/formatters/stylish.js';
@@ -115,5 +115,95 @@ describe('gendiff nested', () => {
     const diff = genDiff(getData(filePath1), getData(filePath2));
 
     expect(formatStylish(diff)).toBe(expected);
+  });
+});
+
+/*TESTS PLAIN*/
+
+describe('gendiff plain', () => {
+  test('Comparacion de archivos anidados con formato plain', () => {
+    const filePath1 = path.resolve(__dirname, '__fixtures__/fileNested1.json');
+    const filePath2 = path.resolve(__dirname, '__fixtures__/fileNested2.json');
+
+    const expected = `Property 'common.follow' was added with value: false
+Property 'common.setting2' was removed
+Property 'common.setting3' was updated. From true to null
+Property 'common.setting4' was added with value: 'blah blah'
+Property 'common.setting5' was added with value: [complex value]
+Property 'common.setting6.doge.wow' was updated. From '' to 'so much'
+Property 'common.setting6.ops' was added with value: 'vops'
+Property 'group1.baz' was updated. From 'bas' to 'bars'
+Property 'group1.nest' was updated. From '[complex value]' to 'str'
+Property 'group2' was removed
+Property 'group3' was added with value: [complex value]`;
+    const diff = genDiff(getData(filePath1), getData(filePath2), 'plain');
+
+    expect(diff).toBe(expected);
+  });
+});
+
+/* Tests adicionales para cobertura */
+
+describe('genDiff format handling', () => {
+  test('genDiff sin formato devuelve estructura diff', () => {
+    const data1 = { a: 1 };
+    const data2 = { a: 2 };
+    const diff = genDiff(data1, data2);
+    expect(diff).toEqual([{ key: 'a', type: 'modified', oldValue: 1, newValue: 2 }]);
+  });
+
+  test('genDiff con formato desconocido lanza error', () => {
+    const data1 = { a: 1 };
+    const data2 = { a: 2 };
+    expect(() => genDiff(data1, data2, 'unknown')).toThrow('Unknown format: unknown');
+  });
+
+  test('genDiff con formato stylish', () => {
+    const data1 = { a: 1 };
+    const data2 = { a: 2 };
+    const result = genDiff(data1, data2, 'stylish');
+    expect(result).toBe(`{\n  - a: 1\n  + a: 2\n}`);
+  });
+
+  test('genDiff con formato plain', () => {
+    const data1 = { a: 1 };
+    const data2 = { a: 2 };
+    const result = genDiff(data1, data2, 'plain');
+    expect(result).toBe(`Property 'a' was updated. From 1 to 2`);
+  });
+});
+
+describe('gendiff con formato JSON', () => {
+  test('gendiff esperado para JSON', () => {
+    const expected = `[
+  {
+    "key": "follow",
+    "value": false,
+    "type": "removed"
+  },
+  {
+    "key": "host",
+    "value": "codica.io",
+    "type": "unchanged"
+  },
+  {
+    "key": "proxy",
+    "value": "123.234.53.22",
+    "type": "removed"
+  },
+  {
+    "key": "timeout",
+    "type": "modified",
+    "oldValue": 50,
+    "newValue": 20
+  },
+  {
+    "key": "verbose",
+    "value": true,
+    "type": "added"
+  }
+]`;
+    const result = JSON.stringify(genDiff(file1, file2), null, 2);
+    expect(result).toBe(expected);
   });
 });

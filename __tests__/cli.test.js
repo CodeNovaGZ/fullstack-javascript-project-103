@@ -3,7 +3,7 @@ import path from 'path';
 
 test('gendiff CLI imprime diff esperado', () => {
   const result = execFileSync('node', [
-    path.resolve('./gendiff.js'),
+    path.resolve('./bin/gendiff.js'),
     './__tests__/__fixtures__/file1.json',
     './__tests__/__fixtures__/file2.json'
   ], { encoding: 'utf-8' });
@@ -20,7 +20,7 @@ test('gendiff CLI imprime diff esperado', () => {
 
 test('gendiff CLI imprime diff esperado para YAML .yaml', () => {
   const result = execFileSync('node', [
-    path.resolve('./gendiff.js'),
+    path.resolve('./bin/gendiff.js'),
     './__tests__/__fixtures__/file3.yaml',
     './__tests__/__fixtures__/file4.yaml'
   ], { encoding: 'utf-8' });
@@ -37,7 +37,7 @@ test('gendiff CLI imprime diff esperado para YAML .yaml', () => {
 
 test('gendiff CLI imprime diff esperado para YAML .yml', () => {
   const result = execFileSync('node', [
-    path.resolve('./gendiff.js'),
+    path.resolve('./bin/gendiff.js'),
     './__tests__/__fixtures__/file3.yml',
     './__tests__/__fixtures__/file4.yml'
   ], { encoding: 'utf-8' });
@@ -50,4 +50,19 @@ test('gendiff CLI imprime diff esperado para YAML .yml', () => {
   + timeout: 20
   + verbose: true
 }`);
+});
+
+test('gendiff CLI con formato plain', () => {
+  const result = execFileSync('node', [
+    path.resolve('./bin/gendiff.js'),
+    './__tests__/__fixtures__/file1.json',
+    './__tests__/__fixtures__/file2.json',
+    '--format',
+    'plain'
+  ], { encoding: 'utf-8' });
+
+  expect(result.trim()).toBe(`Property 'follow' was removed
+Property 'proxy' was removed
+Property 'timeout' was updated. From 50 to 20
+Property 'verbose' was added with value: true`);
 });

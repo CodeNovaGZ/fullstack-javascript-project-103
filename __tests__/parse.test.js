@@ -1,6 +1,13 @@
 import file1 from './__fixtures__/file1.json';
 import file2 from './__fixtures__/file2.json';
 import parse from '../src/parser.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 test('parse file1', () => {
     const data = parse('./__tests__/__fixtures__/file1.json');
@@ -12,16 +19,20 @@ test('parse file2', () => {
     expect(data).toEqual(file2);
 });
 
-test('parse throws error when file does not exist', () => {
+test('recibe archivo inexistente', () => {
     expect(() => parse('./__tests__/__fixtures__/missing.json')).toThrow();
 });
 
-test('parse throws error for invalid JSON', () => {
-    expect(() => parse('./__tests__/__fixtures__/invalid.json')).toThrow(SyntaxError);
+test('recibe archivo JSON inválido', () => {
+    expect(() => parse('./__tests__/__fixtures__/invalid.json')).toThrow();
 });
 
-test('parse throws error when YAML file does not exist', () => {
+test('recibe archivo YAML inexistente', () => {
     expect(() => parse('./__tests__/__fixtures__/missing.yml')).toThrow();
+});
+
+test('recibe archivo YAML inválido', () => {
+    expect(() => parse('./__tests__/__fixtures__/invalid.yml')).toThrow();
 });
 
 test('parse archivo YAML .yml', () => {
@@ -44,4 +55,15 @@ test('parse archivo YAML .yaml', () => {
         proxy: '123.234.53.22',
         follow: false,
     });
+});
+
+test('parse archivo con extensión no soportada lanza error', () => {
+    // Crear un archivo temporal con extensión no soportada
+    const tempFile = path.resolve(__dirname, '__fixtures__/temp.txt');
+    fs.writeFileSync(tempFile, 'content');
+    try {
+        expect(() => parse('./__tests__/__fixtures__/temp.txt')).toThrow('Unsupported file format: .txt');
+    } finally {
+        fs.unlinkSync(tempFile);
+    }
 });

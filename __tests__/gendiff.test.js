@@ -1,18 +1,17 @@
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
 import genDiff from '../src/formatters/index.js';
 import getData from '../src/parser.js';
-import path from 'path';
 import formatStylish from '../src/formatters/stylish.js';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 import file1 from './__fixtures__/file1.json';
 import file2 from './__fixtures__/file2.json';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const filename = fileURLToPath(import.meta.url);
+const dirnamePath = dirname(filename);
 /* Tests JSON */
 describe('gendiff', () => {
-    test('Comparacion de archivos con gendiff', () => {
-        const expected = `{
+  test('Comparacion de archivos con gendiff', () => {
+    const expected = `{
   - follow: false
     host: codica.io
   - proxy: 123.234.53.22
@@ -21,32 +20,32 @@ describe('gendiff', () => {
   + verbose: true
 }`;
 
-        expect(formatStylish(genDiff(file1, file2))).toBe(expected);
-    });
+    expect(formatStylish(genDiff(file1, file2))).toBe(expected);
+  });
 
-    test('gendiff solo clave añadida', () => {
-        expect(formatStylish(genDiff({ host: 'hexlet.io' }, { host: 'hexlet.io', proxy: '123.234.53.22' })))
-            .toBe(`{\n    host: hexlet.io\n  + proxy: 123.234.53.22\n}`);
-    });
+  test('gendiff solo clave añadida', () => {
+    expect(formatStylish(genDiff({ host: 'hexlet.io' }, { host: 'hexlet.io', proxy: '123.234.53.22' })))
+      .toBe('{\n    host: hexlet.io\n  + proxy: 123.234.53.22\n}');
+  });
 
-    test('gendiff solo clave eliminada', () => {
-        expect(formatStylish(genDiff({ host: 'hexlet.io', proxy: '123.234.53.22' }, { host: 'hexlet.io' })))
-            .toBe(`{\n    host: hexlet.io\n  - proxy: 123.234.53.22\n}`);
-    });
+  test('gendiff solo clave eliminada', () => {
+    expect(formatStylish(genDiff({ host: 'hexlet.io', proxy: '123.234.53.22' }, { host: 'hexlet.io' })))
+      .toBe('{\n    host: hexlet.io\n  - proxy: 123.234.53.22\n}');
+  });
 
-    test('gendiff mantiene orden alfabético de claves', () => {
-        const data1 = { b: 1, a: 2 };
-        const data2 = { a: 2, b: 1 };
+  test('gendiff mantiene orden alfabético de claves', () => {
+    const data1 = { b: 1, a: 2 };
+    const data2 = { a: 2, b: 1 };
 
-        expect(formatStylish(genDiff(data1, data2))).toBe(`{\n    a: 2\n    b: 1\n}`);
-    });
+    expect(formatStylish(genDiff(data1, data2))).toBe('{\n    a: 2\n    b: 1\n}');
+  });
 });
 
 /* Tests YAML */
 
 describe('gendiff YAML', () => {
-    test('Comparacion de archivos YAML con gendiff', () => {
-        const expected = `{
+  test('Comparacion de archivos YAML con gendiff', () => {
+    const expected = `{
   - follow: false
     host: codica.io
   - proxy: 123.234.53.22
@@ -54,19 +53,19 @@ describe('gendiff YAML', () => {
   + timeout: 20
   + verbose: true
 }`;
-        const filePath1 = path.resolve(__dirname, '__fixtures__/file3.yaml');
-        const filePath2 = path.resolve(__dirname, '__fixtures__/file4.yaml');
+    const filePath1 = path.resolve(dirnamePath, '__fixtures__/file3.yaml');
+    const filePath2 = path.resolve(dirnamePath, '__fixtures__/file4.yaml');
 
-        expect(formatStylish(genDiff(getData(filePath1), getData(filePath2)))).toBe(expected);
-    });
+    expect(formatStylish(genDiff(getData(filePath1), getData(filePath2)))).toBe(expected);
+  });
 });
 
-/*Tests Nested*/
+/* Tests Nested */
 
 describe('gendiff nested', () => {
   test('Comparacion de archivos anidados', () => {
-    const filePath1 = path.resolve(__dirname, '__fixtures__/fileNested1.json');
-    const filePath2 = path.resolve(__dirname, '__fixtures__/fileNested2.json');
+    const filePath1 = path.resolve(dirnamePath, '__fixtures__/fileNested1.json');
+    const filePath2 = path.resolve(dirnamePath, '__fixtures__/fileNested2.json');
 
     const expected = `{
     common: {
@@ -118,12 +117,12 @@ describe('gendiff nested', () => {
   });
 });
 
-/*TESTS PLAIN*/
+/* TESTS PLAIN */
 
 describe('gendiff plain', () => {
   test('Comparacion de archivos anidados con formato plain', () => {
-    const filePath1 = path.resolve(__dirname, '__fixtures__/fileNested1.json');
-    const filePath2 = path.resolve(__dirname, '__fixtures__/fileNested2.json');
+    const filePath1 = path.resolve(dirnamePath, '__fixtures__/fileNested1.json');
+    const filePath2 = path.resolve(dirnamePath, '__fixtures__/fileNested2.json');
 
     const expected = `Property 'common.follow' was added with value: false
 Property 'common.setting2' was removed
@@ -149,7 +148,9 @@ describe('genDiff format handling', () => {
     const data1 = { a: 1 };
     const data2 = { a: 2 };
     const diff = genDiff(data1, data2);
-    expect(diff).toEqual([{ key: 'a', type: 'modified', oldValue: 1, newValue: 2 }]);
+    expect(diff).toEqual([{
+      key: 'a', type: 'modified', oldValue: 1, newValue: 2,
+    }]);
   });
 
   test('genDiff con formato desconocido lanza error', () => {
@@ -162,14 +163,14 @@ describe('genDiff format handling', () => {
     const data1 = { a: 1 };
     const data2 = { a: 2 };
     const result = genDiff(data1, data2, 'stylish');
-    expect(result).toBe(`{\n  - a: 1\n  + a: 2\n}`);
+    expect(result).toBe('{\n  - a: 1\n  + a: 2\n}');
   });
 
   test('genDiff con formato plain', () => {
     const data1 = { a: 1 };
     const data2 = { a: 2 };
     const result = genDiff(data1, data2, 'plain');
-    expect(result).toBe(`Property 'a' was updated. From 1 to 2`);
+    expect(result).toBe('Property \'a\' was updated. From 1 to 2');
   });
 });
 

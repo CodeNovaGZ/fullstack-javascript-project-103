@@ -5,7 +5,7 @@ test('gendiff CLI imprime diff esperado', () => {
   const result = execFileSync('node', [
     path.resolve('./bin/gendiff.js'),
     './__tests__/__fixtures__/file1.json',
-    './__tests__/__fixtures__/file2.json'
+    './__tests__/__fixtures__/file2.json',
   ], { encoding: 'utf-8' });
 
   expect(result.trim()).toBe(`{
@@ -22,7 +22,7 @@ test('gendiff CLI imprime diff esperado para YAML .yaml', () => {
   const result = execFileSync('node', [
     path.resolve('./bin/gendiff.js'),
     './__tests__/__fixtures__/file3.yaml',
-    './__tests__/__fixtures__/file4.yaml'
+    './__tests__/__fixtures__/file4.yaml',
   ], { encoding: 'utf-8' });
 
   expect(result.trim()).toBe(`{
@@ -39,7 +39,7 @@ test('gendiff CLI imprime diff esperado para YAML .yml', () => {
   const result = execFileSync('node', [
     path.resolve('./bin/gendiff.js'),
     './__tests__/__fixtures__/file3.yml',
-    './__tests__/__fixtures__/file4.yml'
+    './__tests__/__fixtures__/file4.yml',
   ], { encoding: 'utf-8' });
 
   expect(result.trim()).toBe(`{
@@ -58,7 +58,7 @@ test('gendiff CLI con formato plain', () => {
     './__tests__/__fixtures__/file1.json',
     './__tests__/__fixtures__/file2.json',
     '--format',
-    'plain'
+    'plain',
   ], { encoding: 'utf-8' });
 
   expect(result.trim()).toBe(`Property 'follow' was removed

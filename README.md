@@ -76,7 +76,6 @@ Los siguientes cuatro asciicast son demostraciones del paquete en funcionamiento
 
 Esta herramienta facilita comparar versiones de archivos de configuración y revisar cambios de forma clara y legible.
 
-[![Maintainability](https://qlty.sh/gh/CodeNovaGZ/projects/fullstack-javascript-project-103/maintainability.svg)](https://qlty.sh/gh/CodeNovaGZ/projects/fullstack-javascript-project-103)
-[![Code Coverage](https://qlty.sh/gh/CodeNovaGZ/projects/fullstack-javascript-project-103/coverage.svg)](https://qlty.sh/gh/CodeNovaGZ/projects/fullstack-javascript-project-103)
-[![Actions Status](https://github.com/CodeNovaGZ/fullstack-javascript-project-103/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/CodeNovaGZ/fullstack-javascript-project-103/actions)
+[![Maintainability](https://qlty.sh/gh/CodeNovaGZ/projects/gendiff/maintainability.svg)](https://qlty.sh/gh/CodeNovaGZ/projects/gendiff)
+[![Code Coverage](https://qlty.sh/gh/CodeNovaGZ/projects/gendiff/coverage.svg)](https://qlty.sh/gh/CodeNovaGZ/projects/gendiff)
 [![Actions Status](https://github.com/CodeNovaGZ/fullstack-javascript-project-103/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/CodeNovaGZ/fullstack-javascript-project-103/actions)
